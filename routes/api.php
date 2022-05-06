@@ -17,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::resource(name: 'weather', controller: \App\Http\Controllers\WeatherController::class)
+    ->only(methods: ['index', 'store', 'show', 'update', 'destroy']);
