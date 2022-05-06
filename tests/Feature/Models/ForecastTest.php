@@ -29,3 +29,15 @@ test(description: 'Models\Forecast CRUD', closure: function () {
     $forecast->save();
     $this->assertDatabaseHas(table: Forecast::class, data: $forecast->toArray());
 });
+
+test(description: 'Models\Forecast Relationship', closure: function () {
+    $city = City::factory()->create();
+    $forecast = Forecast::factory()->create([
+        'city_id' => $city,
+    ]);
+    $this->assertInstanceOf(expected: City::class, actual: $forecast->city);
+    $this->assertEquals(
+        expected: $city->toArray(),
+        actual: Arr::except(array: $forecast->city->toArray(), keys: ['deleted_at'])
+    );
+});

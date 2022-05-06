@@ -1,5 +1,6 @@
 <?php
 use App\Models\City;
+use App\Models\Forecast;
 
 uses(classAndTraits: \Illuminate\Foundation\Testing\RefreshDatabase::class);
 
@@ -24,4 +25,15 @@ test(description: 'Models\City CRUD', closure: function () {
     $this->assertDatabaseMissing(table: City::class, data: $city->toArray());
     $city->save();
     $this->assertDatabaseHas(table: City::class, data: $city->toArray());
+});
+
+
+test(description: 'Models\City Relationships', closure: function () {
+    $city = City::factory()->create();
+    Forecast::factory(count: 5)->create([
+        'city_id' => $city,
+    ]);
+
+    $this->assertInstanceOf(expected: Forecast::class, actual: $city->forecasts->first());
+    $this->assertCount(expectedCount: 5, haystack: $city->forecasts);
 });

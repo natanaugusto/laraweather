@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Forecast extends Model
@@ -19,4 +20,8 @@ class Forecast extends Model
 
     protected $fillable = ['description', 'min', 'max', 'feels'];
 
+    public function city(): BelongsTo
+    {
+        return $this->belongsTo(related: City::class);
+    }
 }
