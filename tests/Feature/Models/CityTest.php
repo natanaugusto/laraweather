@@ -1,7 +1,8 @@
 <?php
 use App\Models\City;
 
-uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
+uses(classAndTraits: \Illuminate\Foundation\Testing\RefreshDatabase::class);
+
 test(description: 'Models\City CRUD', closure: function () {
     $city = City::factory()->create(attributes: [
         'name' => 'My City',
