@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response as HttpResponse;
 uses(classAndTraits: \Illuminate\Foundation\Testing\RefreshDatabase::class);
 
 test(description: 'Http\WeatherController index', closure: function () {
-    $this->get(route(name: 'weather.index'))
+    $this->get(uri: route(name: 'weather.index'))
         ->assertStatus(status: HttpResponse::HTTP_NO_CONTENT);
 
     $weather = array_map(
@@ -37,7 +37,11 @@ test(description: 'Http\WeatherController index', closure: function () {
 });
 
 test(description: 'Http\WeatherController store', closure: function () {
-    $this->post(route(name: 'weather.store'))
+    $this->post(uri: route(name: 'weather.store'))
+        ->assertStatus(status: HttpResponse::HTTP_UNPROCESSABLE_ENTITY);
+    $cityName = 'Franco da Rocha';
+    $this->post(uri: route(name: 'weather.store'), data: ['city' => $cityName])
+        ->assertJsonFragment(data: ['name' => $cityName])
         ->assertStatus(status: HttpResponse::HTTP_CREATED);
 });
 
