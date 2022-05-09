@@ -21,6 +21,16 @@ $driver = new class implements \App\Laraweather\Contracts\DriverInterface
             query: $q
         );
     }
+
+    public function toQuery(\App\Laraweather\Contracts\WeatherInterface $query): array
+    {
+        return [];
+    }
+
+    public function toWeather(\Illuminate\Http\Client\Response $response): \App\Laraweather\Contracts\WeatherInterface
+    {
+        return new class implements \App\Laraweather\Contracts\WeatherInterface {};
+    }
 };
 
 test(description: 'Instaciate Laraweather/Client', closure: function ($weatherReturn) use ($driver) {
