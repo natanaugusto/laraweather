@@ -4,7 +4,6 @@ namespace App\Laraweather;
 
 use App\Laraweather\Contracts\DriverInterface;
 use App\Laraweather\Contracts\WeatherInterface;
-use Illuminate\Http\Client\Response;
 
 class Client
 {
