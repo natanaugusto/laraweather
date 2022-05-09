@@ -33,9 +33,9 @@ interface DriverInterface
     function toQuery(WeatherInterface $query): array;
 
     /**
-     * Convert a Response object into a WeatherInterface
      * @param Response $response
+     * @param WeatherInterface|null $weather
      * @return WeatherInterface
      */
-    function toWeather(Response $response): WeatherInterface;
+    function toWeather(Response $response, WeatherInterface $weather = null): WeatherInterface;
 }

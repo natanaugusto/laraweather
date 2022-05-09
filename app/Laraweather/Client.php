@@ -3,20 +3,29 @@
 namespace App\Laraweather;
 
 use App\Laraweather\Contracts\DriverInterface;
-
+use App\Laraweather\Contracts\WeatherInterface;
 use Illuminate\Http\Client\Response;
 
 class Client
 {
-    protected DriverInterface $driver;
 
-    public function __construct(DriverInterface $driver)
+    protected DriverInterface $driver;
+    protected WeatherInterface $weather;
+
+    public function __construct(DriverInterface $driver, WeatherInterface $weather)
     {
         $this->driver = $driver;
+        $this->weather = $weather;
     }
 
-    public function getByCity(string $name): Response
+    public function getByCity(string $name): WeatherInterface
     {
-        return $this->driver->getFromAPI(q: ['q' => $name]);
+        $this->weather->setName(value: $name);
+        return $this->driver->toWeather(
+            response: $this->driver->getFromAPI(
+                q: $this->driver->toQuery($this->weather)
+            ),
+            weather: $this->weather
+        );
     }
 }
