@@ -1,0 +1,46 @@
+{
+    "coord": {
+        "lon": -46.7269,
+        "lat": -23.3217
+    },
+    "weather": [
+        {
+            "id": 802,
+            "main": "Clouds",
+            "description": "scattered clouds",
+            "icon": "03d"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 290.72,
+        "feels_like": 290.57,
+        "temp_min": 288.48,
+        "temp_max": 292.63,
+        "pressure": 1023,
+        "humidity": 78,
+        "sea_level": 1023,
+        "grnd_level": 938
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 3.14,
+        "deg": 132,
+        "gust": 5.16
+    },
+    "clouds": {
+        "all": 38
+    },
+    "dt": 1651838397,
+    "sys": {
+        "type": 1,
+        "id": 8394,
+        "country": "BR",
+        "sunrise": 1651829349,
+        "sunset": 1651869470
+    },
+    "timezone": -10800,
+    "id": 3462964,
+    "name": "Franco da Rocha",
+    "cod": 200
+}

@@ -11,7 +11,9 @@
 |
 */
 
-uses(Tests\TestCase::class)->in('Feature');
+use Illuminate\Support\Facades\Http;
+
+uses(Tests\TestCase::class)->in('Feature', 'Laraweather');
 
 /*
 |--------------------------------------------------------------------------
@@ -38,8 +40,12 @@ expect()->extend('toBeOne', function () {
 | global functions to help you to reduce the number of lines of code in your test files.
 |
 */
-
-function something()
+function mockHttp(mixed $body): void
 {
-    // ..
+    Http::fake(callback: function () use ($body) {
+        return Http::response(
+            body: $body,
+            status: \Symfony\Component\HttpFoundation\Response::HTTP_OK
+        );
+    });
 }
