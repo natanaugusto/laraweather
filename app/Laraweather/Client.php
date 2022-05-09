@@ -2,16 +2,21 @@
 
 namespace App\Laraweather;
 
+use App\Laraweather\Contracts\DriverInterface;
+
 use Illuminate\Http\Client\Response;
-use Illuminate\Support\Facades\Http;
 
 class Client
 {
+    protected DriverInterface $driver;
+
+    public function __construct(DriverInterface $driver)
+    {
+        $this->driver = $driver;
+    }
+
     public function getByCity(string $name): Response
     {
-        return Http::get(
-            url: 'http://weaterapi',
-            query: ['q' => $name]
-        );
+        return $this->driver->getFromAPI(q: ['q' => $name]);
     }
 }
