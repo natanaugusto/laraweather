@@ -3,6 +3,7 @@
 namespace App\Laraweather;
 
 use App\Laraweather\Contracts\WeatherInterface;
+use Illuminate\Support\Carbon;
 
 class Weather implements WeatherInterface
 {
@@ -101,5 +102,15 @@ class Weather implements WeatherInterface
     public function setRaw(array $value): void
     {
         $this->raw = $value;
+    }
+
+    public function getLastUpdate(): ?string
+    {
+        return $this->args['last_update'] ?? null;
+    }
+
+    public function setLastUpdate(Carbon $date): void
+    {
+        $this->args['last_update'] = $date->format(format: 'Y-m-d H:i:s');
     }
 }

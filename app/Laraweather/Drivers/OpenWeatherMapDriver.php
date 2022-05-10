@@ -6,6 +6,7 @@ use App\Laraweather\Contracts\DriverInterface;
 use App\Laraweather\Contracts\WeatherInterface;
 
 use Illuminate\Http\Client\Response;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
 
 class OpenWeatherMapDriver implements DriverInterface
@@ -52,6 +53,7 @@ class OpenWeatherMapDriver implements DriverInterface
         $weather->setMin(value: $body['main']['temp_min']);
         $weather->setMax(value: $body['main']['temp_max']);
         $weather->setFeels(value: $body['main']['feels_like']);
+        $weather->setLastUpdate(date: Carbon::parse($body['dt']));
         return $weather;
     }
 }

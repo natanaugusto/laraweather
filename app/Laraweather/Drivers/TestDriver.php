@@ -5,6 +5,7 @@ namespace App\Laraweather\Drivers;
 use App\Laraweather\Contracts\WeatherInterface;
 
 use Illuminate\Http\Client\Response;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
 
 class TestDriver implements \App\Laraweather\Contracts\DriverInterface
@@ -49,6 +50,7 @@ class TestDriver implements \App\Laraweather\Contracts\DriverInterface
         $weather->setMin(value: $body['main']['temp_min']);
         $weather->setMax(value: $body['main']['temp_max']);
         $weather->setFeels(value: $body['main']['feels_like']);
+        $weather->setLastUpdate(date: Carbon::parse($body['dt']));
         return $weather;
     }
 }

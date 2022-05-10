@@ -24,7 +24,8 @@ test(description: 'Instaciate Laraweather/Client', closure: function ($weatherRe
             'lat' => -23.3217,
             'min' => 288.48,
             'max' => 292.63,
-            'feels' => 290.57
+            'feels' => 290.57,
+            'last_update' => '2022-05-06 11:59:57',
         ],
         actual: $weather->getArgs()
     );

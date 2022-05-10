@@ -2,6 +2,8 @@
 
 namespace App\Laraweather\Contracts;
 
+use Illuminate\Support\Carbon;
+
 interface WeatherInterface
 {
     function getArgs(): ?array;
@@ -30,4 +32,7 @@ interface WeatherInterface
 
     function getRaw(): ?array;
     function setRaw(array $value): void;
+
+    function getLastUpdate(): ?string;
+    function setLastUpdate(Carbon $date): void;
 }
