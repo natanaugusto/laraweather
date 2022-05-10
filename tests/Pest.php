@@ -49,3 +49,18 @@ function mockHttp(mixed $body): void
         );
     });
 }
+
+function providers(): void
+{
+    app()->bind(abstract: \App\Laraweather\Contracts\WeatherInterface::class, concrete: function () {
+        return new \App\Laraweather\Weather();
+    });
+
+    app()->singleton(abstract: \App\Laraweather\Contracts\DriverInterface::class, concrete: function () {
+        return new \App\Laraweather\Drivers\TestDriver();
+    });
+
+    app()->singleton(abstract: \App\Laraweather\Facades\Weather::BINDING_NAME, concrete: function ($app) {
+        return $app->make(\App\Laraweather\Client::class);
+    });
+}

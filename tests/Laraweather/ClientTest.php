@@ -2,60 +2,14 @@
 
 use App\Laraweather\Client;
 use App\Laraweather\Contracts\WeatherInterface;
-use Illuminate\Http\Client\Response as HttpClientResponse;
-use Illuminate\Support\Facades\Http;
+use App\Laraweather\Facades\Weather as WeatherFacade;
 
-$weather = new \App\Laraweather\Weather();
-
-$driver = new class implements \App\Laraweather\Contracts\DriverInterface
-{
-    public function getBaseUrl(): string
-    {
-        return 'http://weaterapi';
-    }
-
-    public function getApiKey(): string
-    {
-        return 'API-KEY';
-    }
-
-    public function getFromAPI(mixed $q): HttpClientResponse
-    {
-        return Http::get(
-            url: $this->getBaseUrl(),
-            query: $q
-        );
-    }
-
-    public function toQuery(WeatherInterface $query): array
-    {
-        return [
-            'q' => $query->getName(),
-            'appid' => $this->getApiKey()
-        ];
-    }
-
-    public function toWeather(HttpClientResponse $response, WeatherInterface $weather = null): WeatherInterface
-    {
-        $body = json_decode(
-            json: $response->body(),
-            associative: true
-        );
-        $weather->setRaw(value: $body);
-        $weather->setName(value: $body['name']);
-        $weather->setCountry(value: $body['sys']['country']);
-        $weather->setDescription(value: $body['weather'][0]['description']);
-        $weather->setLonLat(lon: $body['coord']['lon'], lat: $body['coord']['lat']);
-        $weather->setMin(value: $body['main']['temp_min']);
-        $weather->setMax(value: $body['main']['temp_max']);
-        $weather->setFeels(value: $body['main']['feels_like']);
-        return $weather;
-    }
-};
-
-test(description: 'Instaciate Laraweather/Client', closure: function ($weatherReturn) use ($driver, $weather) {
+test(description: 'Instaciate Laraweather/Client', closure: function ($weatherReturn) {
     mockHttp(body: $weatherReturn);
-    $laraweather = new Client(driver: $driver, weather: $weather);
+    $laraweather = new Client(
+        driver: new \App\Laraweather\Drivers\TestDriver(),
+        weather: new \App\Laraweather\Weather()
+    );
     $weather = $laraweather->getByCity(name: 'Franco da Rocha');
     $this->assertInstanceOf(
         expected: WeatherInterface::class,
@@ -84,3 +38,13 @@ test(description: 'Instaciate Laraweather/Client', closure: function ($weatherRe
         actual: $weather->getRaw()
     );
 })->with(data: 'weatherapi/openweatherapi/weather');
+
+test(description: 'Using Weather facade', closure: function ($weatherBody) {
+    mockHttp($weatherBody);
+    providers();
+
+    $this->assertInstanceOf(
+        expected: WeatherInterface::class,
+        actual: WeatherFacade::getByCity(name: 'Franco da Rocha')
+    );
+})->with(data: 'weatherapi/openweatherapi/weather');;
