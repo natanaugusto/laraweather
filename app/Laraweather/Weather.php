@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Laraweather\Traits;
+namespace App\Laraweather;
 
-trait WeatherGettersSettersTrait
+use App\Laraweather\Contracts\WeatherInterface;
+
+class Weather implements WeatherInterface
 {
     protected array $args;
     protected array $raw;

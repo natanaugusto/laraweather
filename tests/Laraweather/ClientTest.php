@@ -1,11 +1,12 @@
 <?php
+
 use App\Laraweather\Client;
 use App\Laraweather\Contracts\WeatherInterface;
 use Illuminate\Http\Client\Response as HttpClientResponse;
 use Illuminate\Support\Facades\Http;
-$weather = new class implements \App\Laraweather\Contracts\WeatherInterface {
-    use \App\Laraweather\Traits\WeatherGettersSettersTrait;
-};
+
+$weather = new \App\Laraweather\Weather();
+
 $driver = new class implements \App\Laraweather\Contracts\DriverInterface
 {
     public function getBaseUrl(): string
