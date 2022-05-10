@@ -41,11 +41,11 @@ test(description: 'Http\WeatherController fetch/delete', closure: function ($wea
     mockHttp(body: $weatherBody);
     providers();
 
-    $this->get(uri: route(name: 'weather.fetch', parameters: ['city' => $cityName]))
+    $this->get(uri: route(name: 'weather.city.fetch', parameters: ['city' => $cityName]))
         ->assertStatus(status: HttpResponse::HTTP_CREATED);
     $this->assertDatabaseHas(table: City::class, data: ['name' => $cityName]);
 
-    $this->delete(uri: route(name: 'weather.destroy', parameters: ['city' => $cityName]))
+    $this->delete(uri: route(name: 'weather.city.destroy', parameters: ['city' => $cityName]))
         ->assertStatus(status: HttpResponse::HTTP_ACCEPTED);
     $this->assertSoftDeleted(table: City::class, data: ['name' => $cityName]);
 })->with(data: 'weatherapi/openweatherapi/weather');

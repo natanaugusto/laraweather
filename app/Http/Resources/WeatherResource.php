@@ -2,9 +2,9 @@
 
 namespace App\Http\Resources;
 
+use App\Models\City;
 use App\Laraweather\Contracts\WeatherInterface;
 use App\Laraweather\Facades\Laraweather;
-use App\Models\City;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class WeatherResource extends JsonResource
@@ -24,7 +24,13 @@ class WeatherResource extends JsonResource
         if (is_null($city)) {
             $city = self::convert(Laraweather::getByCity(name: $data['city']));
         }
+
         return WeatherResource::make($city);
+    }
+
+    public function wasCreated(): bool
+    {
+        return $this->resource->wasRecentlyCreated;
     }
 
     private static function convert(WeatherInterface $weather): City

@@ -21,6 +21,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['prefix' => 'weather', 'as' => 'weather.'], function () {
     Route::get(uri: '/', action: [WeatherController::class, 'index'])->name(name: 'index');
-    Route::get(uri: '/{city?}', action: [WeatherController::class, 'fetch'])->name(name: 'fetch');
-    Route::delete(uri: '/{city}', action: [WeatherController::class, 'destroy'])->name(name: 'destroy');
+    Route::group(['prefix' => 'city', 'as' => 'city.'], function () {
+        Route::get(uri: '/{city?}', action: [WeatherController::class, 'fetch'])->name(name: 'fetch');
+        Route::delete(uri: '/{city}', action: [WeatherController::class, 'destroy'])->name(name: 'destroy');
+    });
 });

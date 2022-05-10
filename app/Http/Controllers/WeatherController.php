@@ -28,7 +28,10 @@ class WeatherController extends Controller
     {
         try {
             $weather = WeatherResource::fetch(data: ['city' => $city]);
-            return response()->json(data: $weather, status: HttpResponse::HTTP_CREATED);
+            return response()->json(
+                data: $weather,
+                status: $weather->wasCreated() ? HttpResponse::HTTP_CREATED : HttpResponse::HTTP_OK
+            );
         } catch (\Throwable $e) {
             return response()->json(data: [
                 'message' => $e->getMessage(),
