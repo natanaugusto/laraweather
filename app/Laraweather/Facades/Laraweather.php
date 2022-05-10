@@ -8,7 +8,7 @@ use App\Laraweather\Client;
  * @method static getByCity(string $name)
  * @see Client::getByCity()
  */
-class Weather extends \Illuminate\Support\Facades\Facade
+class Laraweather extends \Illuminate\Support\Facades\Facade
 {
     const BINDING_NAME = 'weather';
 

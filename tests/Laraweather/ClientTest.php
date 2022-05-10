@@ -2,7 +2,7 @@
 
 use App\Laraweather\Client;
 use App\Laraweather\Contracts\WeatherInterface;
-use App\Laraweather\Facades\Weather as WeatherFacade;
+use App\Laraweather\Facades\Laraweather as WeatherFacade;
 
 test(description: 'Instaciate Laraweather/Client', closure: function ($weatherReturn) {
     mockHttp(body: $weatherReturn);

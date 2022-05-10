@@ -16,7 +16,7 @@ class WeatherServiceProvider extends ServiceProvider
             return new \App\Laraweather\Drivers\OpenWeatherMapDriver();
         });
 
-        $this->app->singleton(abstract: \App\Laraweather\Facades\Weather::BINDING_NAME, concrete: function ($app) {
+        $this->app->singleton(abstract: \App\Laraweather\Facades\Laraweather::BINDING_NAME, concrete: function ($app) {
             return $app->make(\App\Laraweather\Client::class);
         });
     }

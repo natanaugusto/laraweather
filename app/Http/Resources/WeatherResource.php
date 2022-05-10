@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Laraweather\Contracts\WeatherInterface;
-use App\Laraweather\Facades\Weather;
+use App\Laraweather\Facades\Laraweather;
 use App\Models\City;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -22,7 +22,7 @@ class WeatherResource extends JsonResource
     {
         $city = City::where(column: 'name', value: $data['city'])->first();
         if (is_null($city)) {
-            $city = self::convert(Weather::getByCity(name: $data['city']));
+            $city = self::convert(Laraweather::getByCity(name: $data['city']));
 
         }
         return WeatherResource::make($city);
