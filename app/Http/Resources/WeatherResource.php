@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use App\Laraweather\Contracts\WeatherInterface;
+use App\Laraweather\Facades\Weather;
 use App\Models\City;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,9 +22,28 @@ class WeatherResource extends JsonResource
     {
         $city = City::where(column: 'name', value: $data['city'])->first();
         if (is_null($city)) {
-            $city = City::factory()->create(attributes: ['name' => $data['city']]);
+            $city = self::convert(Weather::getByCity(name: $data['city']));
+
         }
         return WeatherResource::make($city);
+    }
+
+    private static function convert(WeatherInterface $weather): City
+    {
+        $city = new City();
+        $city->name = $weather->getName();
+        $city->country = $weather->getCountry();
+        $lonLat = $weather->getLonLat();
+        $city->lon = $lonLat[0];
+        $city->lat = $lonLat[1];
+        $city->save();
+        $city->forecasts()->create(attributes: [
+           'min' => $weather->getMin(),
+           'max' => $weather->getMax(),
+           'feels' => $weather->getFeels(),
+           'description' => $weather->getDescription(),
+        ]);
+        return $city;
     }
 
     /**

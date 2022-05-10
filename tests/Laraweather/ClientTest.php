@@ -47,4 +47,4 @@ test(description: 'Using Weather facade', closure: function ($weatherBody) {
         expected: WeatherInterface::class,
         actual: WeatherFacade::getByCity(name: 'Franco da Rocha')
     );
-})->with(data: 'weatherapi/openweatherapi/weather');;
+})->with(data: 'weatherapi/openweatherapi/weather');

@@ -185,7 +185,7 @@ return [
         /*
          * Package Service Providers...
          */
-
+        App\Laraweather\Providers\WeatherServiceProvider::class,
         /*
          * Application Service Providers...
          */

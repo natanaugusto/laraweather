@@ -13,9 +13,9 @@ class Forecast extends Model
 
     protected $casts = [
         'description' => 'string',
-        'min' => 'float:4,2',
-        'max' => 'float:4,2',
-        'feels' => 'float:4,2',
+        'min' => 'float:5,2',
+        'max' => 'float:5,2',
+        'feels' => 'float:5,2',
     ];
 
     protected $fillable = ['description', 'min', 'max', 'feels'];

@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId(column: 'city_id')->constrained(table: 'cities');
             $table->string(column: 'description');
-            $table->float(column: 'min', total: 4);
-            $table->float(column: 'max', total: 4);
-            $table->float(column: 'feels', total: 4);
+            $table->float(column: 'min', total: 5);
+            $table->float(column: 'max', total: 5);
+            $table->float(column: 'feels', total: 5);
             $table->timestamps();
             $table->softDeletes();
         });

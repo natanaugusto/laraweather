@@ -15,9 +15,9 @@ class ForecastResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'min' => round(num: $this->min, precision: 2),
-            'max' => round(num: $this->max, precision: 2),
-            'feels' => round(num: $this->feels, precision: 2),
+            'min' => number_format(num: $this->min, decimals: 2),
+            'max' => number_format(num: $this->max, decimals: 2),
+            'feels' => number_format(num: $this->feels, decimals: 2),
             'description' => $this->description,
         ];
     }

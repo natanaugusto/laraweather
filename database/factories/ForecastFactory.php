@@ -20,9 +20,9 @@ class ForecastFactory extends Factory
         return [
             'city_id' => City::factory(),
             'description' => $this->faker->text,
-            'min' => $this->faker->randomFloat(nbMaxDecimals: 2, min: -2, max: 50),
-            'max' => $this->faker->randomFloat(nbMaxDecimals: 2, min: -2, max: 50),
-            'feels' => $this->faker->randomFloat(nbMaxDecimals: 2, min: -2, max: 50),
+            'min' => $this->faker->randomFloat(nbMaxDecimals: 2, min: -2, max: 200),
+            'max' => $this->faker->randomFloat(nbMaxDecimals: 2, min: -2, max: 200),
+            'feels' => $this->faker->randomFloat(nbMaxDecimals: 2, min: -2, max: 200),
         ];
     }
 }

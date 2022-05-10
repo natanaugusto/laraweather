@@ -36,14 +36,18 @@ test(description: 'Http\WeatherController index', closure: function () {
 
 });
 
-test(description: 'Http\WeatherController store', closure: function () {
+test(description: 'Http\WeatherController store', closure: function ($weatherBody) {
+    mockHttp(body: $weatherBody);
+    providers();
     $this->post(uri: route(name: 'weather.store'))
         ->assertStatus(status: HttpResponse::HTTP_UNPROCESSABLE_ENTITY);
     $cityName = 'Franco da Rocha';
     $this->post(uri: route(name: 'weather.store'), data: ['city' => $cityName])
         ->assertJsonFragment(data: ['name' => $cityName])
         ->assertStatus(status: HttpResponse::HTTP_CREATED);
-});
+
+    $this->assertDatabaseHas(table: City::class, data: ['name' => $cityName]);
+})->with(data: 'weatherapi/openweatherapi/weather');
 
 test(description: 'Http\WeatherController show', closure: function () {
     $this->get(route(name: 'weather.show', parameters: ['weather' => 1]))
