@@ -36,30 +36,16 @@ test(description: 'Http\WeatherController index', closure: function () {
 
 });
 
-test(description: 'Http\WeatherController store', closure: function ($weatherBody) {
+$cityName = 'Franco da Rocha';
+test(description: 'Http\WeatherController fetch/delete', closure: function ($weatherBody) use ($cityName) {
     mockHttp(body: $weatherBody);
     providers();
-    $this->post(uri: route(name: 'weather.store'))
-        ->assertStatus(status: HttpResponse::HTTP_UNPROCESSABLE_ENTITY);
-    $cityName = 'Franco da Rocha';
-    $this->post(uri: route(name: 'weather.store'), data: ['city' => $cityName])
-        ->assertJsonFragment(data: ['name' => $cityName])
+
+    $this->get(uri: route(name: 'weather.fetch', parameters: ['city' => $cityName]))
         ->assertStatus(status: HttpResponse::HTTP_CREATED);
-
     $this->assertDatabaseHas(table: City::class, data: ['name' => $cityName]);
+
+    $this->delete(uri: route(name: 'weather.destroy', parameters: ['city' => $cityName]))
+        ->assertStatus(status: HttpResponse::HTTP_ACCEPTED);
+    $this->assertSoftDeleted(table: City::class, data: ['name' => $cityName]);
 })->with(data: 'weatherapi/openweatherapi/weather');
-
-test(description: 'Http\WeatherController show', closure: function () {
-    $this->get(route(name: 'weather.show', parameters: ['weather' => 1]))
-        ->assertStatus(status: HttpResponse::HTTP_OK);
-});
-
-test(description: 'Http\WeatherController update', closure: function () {
-    $this->put(route(name: 'weather.update', parameters: ['weather' => 1]))
-        ->assertStatus(status: HttpResponse::HTTP_ACCEPTED);
-});
-
-test(description: 'Http\WeatherController destroy', closure: function () {
-    $this->delete(route(name: 'weather.destroy', parameters: ['weather' => 1]))
-        ->assertStatus(status: HttpResponse::HTTP_ACCEPTED);
-});

@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\WeatherController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -18,5 +19,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource(name: 'weather', controller: \App\Http\Controllers\WeatherController::class)
-    ->only(methods: ['index', 'store', 'show', 'update', 'destroy']);
+Route::group(['prefix' => 'weather', 'as' => 'weather.'], function () {
+    Route::get(uri: '/', action: [WeatherController::class, 'index'])->name(name: 'index');
+    Route::get(uri: '/{city?}', action: [WeatherController::class, 'fetch'])->name(name: 'fetch');
+    Route::delete(uri: '/{city}', action: [WeatherController::class, 'destroy'])->name(name: 'destroy');
+});
