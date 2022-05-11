@@ -20,7 +20,7 @@ class WeatherResource extends JsonResource
      */
     public static function fetch(array $data): self
     {
-        $city = City::where(column: 'name', value: $data['city'])->first();
+        $city = City::where(column: 'name', operator: '=', value: $data['city'])->first();
         if (is_null($city)) {
             $city = self::convert(Laraweather::getByCity(name: $data['city']));
         }
