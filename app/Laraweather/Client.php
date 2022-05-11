@@ -4,6 +4,7 @@ namespace App\Laraweather;
 
 use App\Laraweather\Contracts\DriverInterface;
 use App\Laraweather\Contracts\WeatherInterface;
+use App\Laraweather\Events\FetchedFromWeatherAPI;
 
 class Client
 {
@@ -20,11 +21,13 @@ class Client
     public function getByCity(string $name): WeatherInterface
     {
         $this->weather->setName(value: $name);
-        return $this->driver->toWeather(
+        $weather = $this->driver->toWeather(
             response: $this->driver->getFromAPI(
                 q: $this->driver->toQuery($this->weather)
             ),
             weather: $this->weather
         );
+        FetchedFromWeatherAPI::dispatch($weather);
+        return $weather;
     }
 }

@@ -11,6 +11,7 @@
 |
 */
 
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Http;
 
 uses(Tests\TestCase::class)->in('Feature', 'Laraweather');
@@ -50,7 +51,7 @@ function mockHttp(mixed $body): void
     });
 }
 
-function providers(): void
+function provider(): void
 {
     app()->bind(abstract: \App\Laraweather\Contracts\WeatherInterface::class, concrete: function () {
         return new \App\Laraweather\Weather();

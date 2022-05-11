@@ -39,7 +39,7 @@ test(description: 'Http\WeatherController index', closure: function () {
 $cityName = 'Franco da Rocha';
 test(description: 'Http\WeatherController fetch/delete', closure: function ($weatherBody) use ($cityName) {
     mockHttp(body: $weatherBody);
-    providers();
+    provider();
 
     $this->get(uri: route(name: 'weather.city.fetch', parameters: ['city' => $cityName]))
         ->assertStatus(status: HttpResponse::HTTP_CREATED);
