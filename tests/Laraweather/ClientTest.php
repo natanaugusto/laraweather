@@ -3,8 +3,8 @@
 use App\Laraweather\Client;
 use App\Laraweather\Facades\Laraweather;
 use App\Laraweather\Contracts\WeatherInterface;
-use App\Laraweather\Events\FetchedFromWeatherAPI;
-use App\Laraweather\Listeners\LogWeatherFetched;
+use App\Laraweather\Events\FetchedFromWeatherAPIEvent;
+use App\Laraweather\Listeners\LogWeatherFetchedListeners;
 
 use Illuminate\Support\Facades\Event;
 
@@ -16,7 +16,7 @@ test(description: 'Instaciate Laraweather/Client', closure: function ($weatherRe
         weather: new \App\Laraweather\Weather()
     );
     $weather = $laraweather->getByCity(name: 'Franco da Rocha');
-    Event::assertDispatched(event: function (FetchedFromWeatherAPI $event) use ($weather) {
+    Event::assertDispatched(event: function (FetchedFromWeatherAPIEvent $event) use ($weather) {
         return $event->weather === $weather;
     });
     $this->assertInstanceOf(
@@ -52,17 +52,17 @@ test(description: 'Using Weather facade', closure: function ($weatherBody) {
     mockHttp($weatherBody);
     provider();
     Event::fake();
-    Event::listen(events: FetchedFromWeatherAPI::class, listener: LogWeatherFetched::class);
+    Event::listen(events: FetchedFromWeatherAPIEvent::class, listener: LogWeatherFetchedListeners::class);
     $weather = Laraweather::getByCity(name: 'Franco da Rocha');
     $this->assertInstanceOf(
         expected: WeatherInterface::class,
         actual: $weather
     );
-    Event::assertDispatched(event: function (FetchedFromWeatherAPI $event) use ($weather) {
+    Event::assertDispatched(event: function (FetchedFromWeatherAPIEvent $event) use ($weather) {
         return $event->weather === $weather;
     });
     Event::assertListening(
-        expectedEvent: FetchedFromWeatherAPI::class,
-        expectedListener: LogWeatherFetched::class
+        expectedEvent: FetchedFromWeatherAPIEvent::class,
+        expectedListener: LogWeatherFetchedListeners::class
     );
 })->with(data: 'weatherapi/openweatherapi/weather');

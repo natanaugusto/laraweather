@@ -4,7 +4,7 @@ namespace App\Laraweather;
 
 use App\Laraweather\Contracts\DriverInterface;
 use App\Laraweather\Contracts\WeatherInterface;
-use App\Laraweather\Events\FetchedFromWeatherAPI;
+use App\Laraweather\Events\FetchedFromWeatherAPIEvent;
 
 class Client
 {
@@ -27,7 +27,7 @@ class Client
             ),
             weather: $this->weather
         );
-        FetchedFromWeatherAPI::dispatch($weather);
+        FetchedFromWeatherAPIEvent::dispatch($weather);
         return $weather;
     }
 }
