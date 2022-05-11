@@ -16,9 +16,10 @@ class Forecast extends Model
         'min' => 'float:5,2',
         'max' => 'float:5,2',
         'feels' => 'float:5,2',
+        'last_update' => 'datetime',
     ];
 
-    protected $fillable = ['description', 'min', 'max', 'feels'];
+    protected $fillable = ['description', 'min', 'max', 'feels', 'last_update'];
 
     public function city(): BelongsTo
     {

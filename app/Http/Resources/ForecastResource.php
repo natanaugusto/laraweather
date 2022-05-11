@@ -19,6 +19,7 @@ class ForecastResource extends JsonResource
             'max' => number_format(num: $this->max, decimals: 2),
             'feels' => number_format(num: $this->feels, decimals: 2),
             'description' => $this->description,
+            'last_update' => $this->last_update,
         ];
     }
 }

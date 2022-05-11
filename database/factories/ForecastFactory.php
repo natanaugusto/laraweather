@@ -23,6 +23,7 @@ class ForecastFactory extends Factory
             'min' => $this->faker->randomFloat(nbMaxDecimals: 2, min: -2, max: 200),
             'max' => $this->faker->randomFloat(nbMaxDecimals: 2, min: -2, max: 200),
             'feels' => $this->faker->randomFloat(nbMaxDecimals: 2, min: -2, max: 200),
+            'last_update' => $this->faker->dateTime,
         ];
     }
 }

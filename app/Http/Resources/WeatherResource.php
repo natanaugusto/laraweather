@@ -47,6 +47,7 @@ class WeatherResource extends JsonResource
            'max' => $weather->getMax(),
            'feels' => $weather->getFeels(),
            'description' => $weather->getDescription(),
+           'last_update' => $weather->getLastUpdate(),
         ]);
         return $city;
     }

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->float(column: 'min', total: 5);
             $table->float(column: 'max', total: 5);
             $table->float(column: 'feels', total: 5);
+            $table->dateTime(column: 'last_update');
             $table->timestamps();
             $table->softDeletes();
         });
