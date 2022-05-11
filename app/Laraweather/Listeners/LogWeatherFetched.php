@@ -3,8 +3,10 @@
 namespace App\Laraweather\Listeners;
 
 use App\Laraweather\Events\FetchedFromWeatherAPI;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Log;
 
-class LogWeatherFetched
+class LogWeatherFetched implements ShouldQueue
 {
     /**
      * Create the event listener.
@@ -24,6 +26,6 @@ class LogWeatherFetched
      */
     public function handle(FetchedFromWeatherAPI $event)
     {
-        //
+        Log::info(message: 'Weather API Fetched', context: ['weather' => $event->weather]);
     }
 }

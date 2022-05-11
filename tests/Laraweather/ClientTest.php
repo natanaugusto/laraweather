@@ -1,10 +1,10 @@
 <?php
 
 use App\Laraweather\Client;
+use App\Laraweather\Facades\Laraweather;
 use App\Laraweather\Contracts\WeatherInterface;
 use App\Laraweather\Events\FetchedFromWeatherAPI;
 use App\Laraweather\Listeners\LogWeatherFetched;
-use App\Laraweather\Facades\Laraweather as WeatherFacade;
 
 use Illuminate\Support\Facades\Event;
 
@@ -53,7 +53,7 @@ test(description: 'Using Weather facade', closure: function ($weatherBody) {
     provider();
     Event::fake();
     Event::listen(events: FetchedFromWeatherAPI::class, listener: LogWeatherFetched::class);
-    $weather = WeatherFacade::getByCity(name: 'Franco da Rocha');
+    $weather = Laraweather::getByCity(name: 'Franco da Rocha');
     $this->assertInstanceOf(
         expected: WeatherInterface::class,
         actual: $weather
